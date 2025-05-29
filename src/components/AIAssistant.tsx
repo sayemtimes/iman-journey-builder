@@ -5,8 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MessageSquare, Send, Bot, User } from 'lucide-react';
 
+interface Message {
+  type: 'bot' | 'user';
+  text: string;
+  textEn?: string;
+}
+
 const AIAssistant = () => {
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     {
       type: 'bot',
       text: 'আসসালামু আলাইকুম! আমি আপনার ইসলামী সহায়ক। আপনার কোন প্রশ্ন আছে?',
@@ -17,13 +23,13 @@ const AIAssistant = () => {
 
   const handleSend = () => {
     if (inputValue.trim()) {
-      const newMessage = { type: 'user', text: inputValue };
+      const newMessage: Message = { type: 'user', text: inputValue };
       setMessages([...messages, newMessage]);
       setInputValue('');
       
       // Simulate AI response
       setTimeout(() => {
-        const botResponse = {
+        const botResponse: Message = {
           type: 'bot',
           text: 'আপনার প্রশ্নের জন্য ধন্যবাদ। আমি এই বিষয়ে কুরআন ও হাদীসের আলোকে উত্তর দেওয়ার চেষ্টা করছি...',
           textEn: 'Thank you for your question. I am trying to answer this in light of the Quran and Hadith...'
