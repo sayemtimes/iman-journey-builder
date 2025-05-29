@@ -5,6 +5,8 @@ import Hero from '@/components/Hero';
 import MonthlyPlan from '@/components/MonthlyPlan';
 import AIAssistant from '@/components/AIAssistant';
 import DownloadSection from '@/components/DownloadSection';
+import BlogSection from '@/components/BlogSection';
+import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 
 const Index = () => {
@@ -15,6 +17,8 @@ const Index = () => {
       <MonthlyPlan />
       <AIAssistant />
       <DownloadSection />
+      <BlogSection />
+      <ContactSection />
       <Footer />
     </div>
   );

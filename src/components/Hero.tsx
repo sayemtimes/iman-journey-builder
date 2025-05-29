@@ -4,6 +4,27 @@ import { Button } from '@/components/ui/button';
 import { ArrowDown, Download, Star } from 'lucide-react';
 
 const Hero = () => {
+  const handleStartNow = () => {
+    const planSection = document.querySelector('#plan');
+    if (planSection) {
+      planSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleDownloadPDF = () => {
+    const downloadSection = document.querySelector('#download');
+    if (downloadSection) {
+      downloadSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToNext = () => {
+    const planSection = document.querySelector('#plan');
+    if (planSection) {
+      planSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="pt-24 min-h-screen bg-gradient-to-br from-green-50 via-white to-yellow-50 relative overflow-hidden">
       {/* Islamic Pattern Background */}
@@ -53,6 +74,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button 
               size="lg" 
+              onClick={handleStartNow}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
               <Star className="mr-2" size={20} />
@@ -61,6 +83,7 @@ const Hero = () => {
             <Button 
               variant="outline" 
               size="lg"
+              onClick={handleDownloadPDF}
               className="border-2 border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <Download className="mr-2" size={20} />
@@ -86,7 +109,10 @@ const Hero = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div 
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer"
+          onClick={scrollToNext}
+        >
           <ArrowDown className="text-green-600" size={24} />
         </div>
       </div>

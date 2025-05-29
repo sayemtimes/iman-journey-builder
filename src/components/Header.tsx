@@ -10,6 +10,14 @@ const Header = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleLanguage = () => setLanguage(language === 'bn' ? 'en' : 'bn');
 
+  const handleNavClick = (href: string) => {
+    setIsMenuOpen(false);
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const navItems = {
     bn: [
       { label: 'হোম', href: '#home' },
@@ -34,7 +42,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleNavClick('#home')}>
             <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-lg">ই</span>
             </div>
@@ -51,13 +59,13 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             {navItems[language].map((item, index) => (
-              <a
+              <button
                 key={index}
-                href={item.href}
+                onClick={() => handleNavClick(item.href)}
                 className="text-gray-700 hover:text-green-600 transition-colors duration-300 font-medium"
               >
                 {item.label}
-              </a>
+              </button>
             ))}
           </nav>
 
@@ -86,14 +94,13 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-gray-200">
             <nav className="flex flex-col space-y-3">
               {navItems[language].map((item, index) => (
-                <a
+                <button
                   key={index}
-                  href={item.href}
-                  className="text-gray-700 hover:text-green-600 transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => handleNavClick(item.href)}
+                  className="text-gray-700 hover:text-green-600 transition-colors duration-300 font-medium py-2 text-left"
                 >
                   {item.label}
-                </a>
+                </button>
               ))}
             </nav>
           </div>

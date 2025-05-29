@@ -3,8 +3,44 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Download, FileText, Share, Image } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const DownloadSection = () => {
+  const { toast } = useToast();
+
+  const handleDownload = (resourceName: string) => {
+    toast({
+      title: `${resourceName} ডাউনলোড`,
+      description: "আপনার ডাউনলোড শীঘ্রই শুরু হবে...",
+    });
+    
+    // Simulate download
+    setTimeout(() => {
+      const link = document.createElement('a');
+      link.href = '#';
+      link.download = `${resourceName.replace(/\s+/g, '-').toLowerCase()}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 1000);
+  };
+
+  const handleShare = (resourceName: string) => {
+    if (navigator.share) {
+      navigator.share({
+        title: resourceName,
+        text: `"ইলম থেকে ইখলাস" - ${resourceName}`,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "লিংক কপি হয়েছে",
+        description: "আপনি এখন লিংকটি শেয়ার করতে পারেন।",
+      });
+    }
+  };
+
   const resources = [
     {
       title: "সম্পূর্ণ গাইড PDF",
@@ -93,13 +129,24 @@ const DownloadSection = () => {
                     <span>{resource.pages}</span>
                   </div>
                   
-                  <Button 
-                    className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-all duration-300 group-hover:bg-green-600"
-                    variant="default"
-                  >
-                    <Download className="mr-2" size={16} />
-                    ডাউনলোড
-                  </Button>
+                  <div className="space-y-2">
+                    <Button 
+                      onClick={() => handleDownload(resource.title)}
+                      className="w-full bg-gray-900 hover:bg-gray-800 text-white rounded-full transition-all duration-300 group-hover:bg-green-600"
+                      variant="default"
+                    >
+                      <Download className="mr-2" size={16} />
+                      ডাউনলোড
+                    </Button>
+                    <Button 
+                      onClick={() => handleShare(resource.title)}
+                      variant="outline"
+                      className="w-full border-gray-300 text-gray-600 hover:bg-gray-50 rounded-full transition-all duration-300"
+                    >
+                      <Share className="mr-2" size={16} />
+                      শেয়ার
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             );
@@ -127,6 +174,7 @@ const DownloadSection = () => {
               <div className="flex flex-col space-y-3">
                 <Button 
                   size="lg"
+                  onClick={() => handleDownload("সম্পূর্ণ ইলম থেকে ইখলাস গাইড")}
                   className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg rounded-full shadow-lg transition-all duration-300"
                 >
                   <Download className="mr-2" size={20} />
@@ -135,6 +183,7 @@ const DownloadSection = () => {
                 <Button 
                   variant="outline"
                   size="lg"
+                  onClick={() => handleShare("সম্পূর্ণ ইলম থেকে ইখলাস গাইড")}
                   className="border-2 border-white text-white hover:bg-white hover:text-green-600 px-8 py-4 text-lg rounded-full transition-all duration-300"
                 >
                   <Share className="mr-2" size={20} />

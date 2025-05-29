@@ -1,11 +1,53 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar, Book, User, Share, ChevronDown, ChevronUp } from 'lucide-react';
+import { Calendar, Book, User, Share, ChevronDown, ChevronUp, Download, Smartphone } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const MonthlyPlan = () => {
   const [expandedMonth, setExpandedMonth] = useState<number | null>(null);
+  const { toast } = useToast();
+
+  const handleDownloadPlan = (monthNumber: number) => {
+    toast({
+      title: `${monthNumber} মাসের প্ল্যান ডাউনলোড`,
+      description: "আপনার ডাউনলোড শীঘ্রই শুরু হবে...",
+    });
+    
+    // Simulate PDF download
+    setTimeout(() => {
+      const link = document.createElement('a');
+      link.href = '#';
+      link.download = `month-${monthNumber}-plan.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 1000);
+  };
+
+  const handleDownloadCompleteGuide = () => {
+    toast({
+      title: "সম্পূর্ণ গাইডবুক ডাউনলোড",
+      description: "৪ মাসের পূর্ণাঙ্গ গাইড ডাউনলোড হচ্ছে...",
+    });
+    
+    // Simulate PDF download
+    setTimeout(() => {
+      const link = document.createElement('a');
+      link.href = '#';
+      link.download = 'ilm-theke-ikhlas-complete-guide.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 1000);
+  };
+
+  const handleDownloadMobileApp = () => {
+    toast({
+      title: "মোবাইল অ্যাপ",
+      description: "অ্যাপ স্টোর/প্লে স্টোরে আপনাকে রিডিরেক্ট করা হচ্ছে...",
+    });
+  };
 
   const months = [
     {
@@ -318,9 +360,11 @@ const MonthlyPlan = () => {
                   </Button>
                   
                   <Button 
+                    onClick={() => handleDownloadPlan(month.month)}
                     className={`w-full bg-gradient-to-r ${month.color} hover:opacity-90 text-white rounded-full transition-all duration-300`}
                     variant="default"
                   >
+                    <Download className="mr-2" size={16} />
                     {month.month} মাসের প্ল্যান ডাউনলোড
                   </Button>
                 </CardContent>
@@ -340,15 +384,19 @@ const MonthlyPlan = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg"
+                onClick={handleDownloadCompleteGuide}
                 className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               >
+                <Download className="mr-2" size={20} />
                 📘 PDF গাইডবুক ডাউনলোড
               </Button>
               <Button 
                 size="lg"
                 variant="outline"
+                onClick={handleDownloadMobileApp}
                 className="border-2 border-green-600 text-green-600 hover:bg-green-50 px-8 py-4 text-lg rounded-full transition-all duration-300"
               >
+                <Smartphone className="mr-2" size={20} />
                 📱 মোবাইল অ্যাপ ডাউনলোড
               </Button>
             </div>
