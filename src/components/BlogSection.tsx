@@ -1,11 +1,12 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { BookOpen, Calendar, User, Search, Tag, ArrowRight } from 'lucide-react';
 
 const BlogSection = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -104,7 +105,7 @@ const BlogSection = () => {
 
   const handleReadMore = (postId: number) => {
     console.log(`Reading post ${postId}`);
-    // Navigate to full blog post
+    navigate(`/blog/${postId}`);
   };
 
   return (
